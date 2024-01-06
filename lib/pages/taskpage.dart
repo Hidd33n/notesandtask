@@ -88,8 +88,14 @@ class _TaskPageState extends State<TaskPage> {
         onPressed: createNewTask,
         elevation: 0,
         backgroundColor: Colors.black87,
-        label: const Text('Add New Task'),
-        icon: const Icon(Icons.task_alt_outlined),
+        label: const Text(
+          'Add New Task',
+          style: TextStyle(color: Colors.white),
+        ),
+        icon: const Icon(
+          Icons.task_alt_outlined,
+          color: Colors.white,
+        ),
       ),
       body: db.toDoList.isEmpty
           ? Center(

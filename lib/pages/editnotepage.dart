@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:notes/models/notes.dart';
 import 'package:notes/models/notesdata.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +20,9 @@ class EditNotePage extends StatefulWidget {
 }
 
 class _EditNotePageState extends State<EditNotePage> {
-  quill.QuillController _controller = quill.QuillController.basic();
+  QuillController _controller = QuillController.basic();
 
+  @override
   void initState() {
     super.initState();
     loadExistingNote();
@@ -29,9 +30,9 @@ class _EditNotePageState extends State<EditNotePage> {
 
   // Cargar nota existente
   void loadExistingNote() {
-    final doc = quill.Document()..insert(0, widget.note.text);
+    final doc = Document()..insert(0, widget.note.text);
     setState(() {
-      _controller = quill.QuillController(
+      _controller = QuillController(
           document: doc, selection: const TextSelection.collapsed(offset: 0));
     });
   }
@@ -64,6 +65,10 @@ class _EditNotePageState extends State<EditNotePage> {
     return Scaffold(
         backgroundColor: CupertinoColors.systemGroupedBackground,
         appBar: AppBar(
+          title: Text(
+            'What is on your mind?',
+            style: TextStyle(color: Colors.black),
+          ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -83,13 +88,8 @@ class _EditNotePageState extends State<EditNotePage> {
           centerTitle: true,
           toolbarHeight: 60.2,
           toolbarOpacity: 0.8,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(25),
-                bottomLeft: Radius.circular(25)),
-          ),
-          elevation: 0.00,
-          backgroundColor: Colors.black87,
+          elevation: 0.20,
+          backgroundColor: Colors.white,
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
@@ -105,53 +105,67 @@ class _EditNotePageState extends State<EditNotePage> {
           },
           elevation: 0,
           backgroundColor: Colors.black87,
-          icon: const Icon(Icons.save_sharp),
-          label: const Text('Save'),
+          icon: const Icon(
+            Icons.save_sharp,
+            color: Colors.white,
+          ),
+          label: const Text(
+            'Save',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         body: Column(
           children: [
             //Herramientas
-            quill.QuillToolbar.basic(
-              controller: _controller,
-              showAlignmentButtons: false,
-              showBackgroundColorButton: false,
-              showBoldButton: false,
-              showCenterAlignment: false,
-              showCodeBlock: false,
-              showClearFormat: false,
-              showColorButton: false,
-              showDirection: false,
-              showDividers: false,
-              showFontFamily: false,
-              showFontSize: false,
-              showHeaderStyle: false,
-              showIndent: false,
-              showInlineCode: false,
-              showItalicButton: false,
-              showJustifyAlignment: false,
-              showLeftAlignment: false,
-              showLink: false,
-              showListBullets: false,
-              showListCheck: false,
-              showListNumbers: false,
-              showQuote: false,
-              showRedo: true,
-              showRightAlignment: false,
-              showSearchButton: false,
-              showSmallButton: false,
-              showStrikeThrough: false,
-              showSubscript: false,
-              showSuperscript: false,
-              showUnderLineButton: false,
-              showUndo: true,
+            QuillToolbar.simple(
+              configurations: QuillSimpleToolbarConfigurations(
+                controller: _controller,
+                sharedConfigurations: const QuillSharedConfigurations(),
+                showAlignmentButtons: false,
+                showBackgroundColorButton: false,
+                showBoldButton: false,
+                showCenterAlignment: false,
+                showCodeBlock: false,
+                showClearFormat: false,
+                showColorButton: false,
+                showDirection: false,
+                showDividers: false,
+                showFontFamily: false,
+                showFontSize: false,
+                showHeaderStyle: false,
+                showIndent: false,
+                showInlineCode: false,
+                showItalicButton: false,
+                showJustifyAlignment: false,
+                showLeftAlignment: false,
+                showLink: false,
+                showListBullets: false,
+                showListCheck: false,
+                showListNumbers: false,
+                showQuote: false,
+                showRedo: true,
+                showRightAlignment: false,
+                showSearchButton: false,
+                showSmallButton: false,
+                showStrikeThrough: false,
+                showSubscript: false,
+                showSuperscript: false,
+                showUnderLineButton: false,
+                showUndo: true,
+              ),
             ),
 
             //editor
             Expanded(
                 child: Container(
               padding: const EdgeInsets.all(25),
-              child: quill.QuillEditor.basic(
-                  controller: _controller, readOnly: false),
+              child: QuillEditor.basic(
+                configurations: QuillEditorConfigurations(
+                  controller: _controller,
+                  readOnly: false,
+                  sharedConfigurations: const QuillSharedConfigurations(),
+                ),
+              ),
             ))
           ],
         ));

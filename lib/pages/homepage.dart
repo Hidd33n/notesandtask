@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
   void initState() {
     super.initState();
     // Provider.of<NoteData>(context, listen: false).initializeNotes();
@@ -69,8 +70,11 @@ class _HomePageState extends State<HomePage> {
               onPressed: createNewNote,
               elevation: 0,
               backgroundColor: Colors.black87,
-              label: const Text('Add New Note'),
-              icon: const Icon(Icons.add),
+              label: const Text(
+                'Add New Note',
+                style: TextStyle(color: Colors.white),
+              ),
+              icon: const Icon(Icons.add, color: Colors.white),
             ),
             body: Column(
               children: [
@@ -91,7 +95,10 @@ class _HomePageState extends State<HomePage> {
                             onTap: () =>
                                 goToNotePage(value.getAllNotes()[index], false),
                             trailing: IconButton(
-                              icon: Icon(Icons.delete),
+                              icon: const Icon(
+                                Icons.delete,
+                                size: 30,
+                              ),
                               onPressed: () =>
                                   deleteNote(value.getAllNotes()[index]),
                             ),
